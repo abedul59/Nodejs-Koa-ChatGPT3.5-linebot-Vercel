@@ -61,21 +61,21 @@ router
       Promise
       .all(ctx.req.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
       .then((result) => res.json(result))
-      .catch((err) => {
-          res.status(500).end();
+      //.catch((err) => {
+          //res.status(500).end();
       });
     });
 
-
-app.use(router.routes());
 /*
+app.use(router.routes());
+  */
 app
   .use(router())
   // 自訂 middleware
   .use(function *(ctx, next){
     this.status = 200;
   });
-  */
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
