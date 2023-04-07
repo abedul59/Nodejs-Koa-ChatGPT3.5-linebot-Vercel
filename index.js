@@ -66,15 +66,16 @@ router
       });
     });
 
-/*
+
 app.use(router.routes());
-  */
+/*  
 app
   .use(router())
   // 自訂 middleware
   .use(function *(ctx, next){
     this.status = 200;
   });
+ */
 
 
 const port = process.env.PORT || 3000;
