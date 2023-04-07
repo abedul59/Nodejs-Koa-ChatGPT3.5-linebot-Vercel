@@ -63,7 +63,7 @@ router
       .then((result) => res.json(result))
       //.catch((err) => {
           //res.status(500).end();
-      });
+      //});
     });
 
 
