@@ -67,7 +67,7 @@ app.use(function *(ctx, next){
 
 
 
-
+/*
 router
     .get('/', ctx => {
         ctx.body = '首頁';
@@ -92,4 +92,15 @@ const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
+*/
 
+const router = Router();  
+// Router -> / 
+router.get('/', async(ctx) => {     
+    ctx.body = 'Hello Koa2 body'; 
+});  
+// Router -> /ready
+router.get('/ready', async(ctx) => {     
+    ctx.body = 'Ready Content'; 
+});  app.use(router.routes());  
+app.listen(3001);
