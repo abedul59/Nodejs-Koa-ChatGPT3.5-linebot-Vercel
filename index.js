@@ -50,8 +50,16 @@ const handleEvent = async (event) => {
 
 router.post('/callback', function *(ctx, next) {
   // 取 User 傳送得資料
-  ctx.req.body
+      Promise
+      .all(ctx.req.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
+      .then((result) => res.json(result))
+      .catch((err) => {
+          res.status(500).end();   
+        });
+        
+  
 })
+
 app.use(function *(ctx, next){
     this.status = 200;
   });
