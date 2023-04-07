@@ -76,7 +76,7 @@ router
     .post('/callback', function(ctx) {
      
       Promise
-      .all(ctx.req.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
+      .all(ctx.request.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
       .then((result) => res.json(result))
       //.catch((err) => {
           //res.status(500).end();
