@@ -51,21 +51,34 @@ const handleEvent = async (event) => {
 
 
 
-// Webhook listener
-app.get('/', (req, res) => {
-  res.end('hello!');
-});
+router
+    .get('/', ctx => {
+        ctx.body = '首頁';
+    })
 
-app.post('/callback', (req, res) => {
-    Promise
-        .all(req.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
-        .then((result) => res.json(result))
-        .catch((err) => {
-            res.status(500).end();
-        });
-});
+    .post('/callback', function *(ctx, next) {
+     
+      Promise
+      .all(ctx.req.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
+      .then((result) => res.json(result))
+      .catch((err) => {
+          res.status(500).end();
+      });
+    });
+
+
+app.use(router.routes());
+/*
+app
+  .use(router())
+  // 自訂 middleware
+  .use(function *(ctx, next){
+    this.status = 200;
+  });
+  */
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`listening on ${port}`);
 });
+
