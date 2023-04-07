@@ -47,7 +47,7 @@ const handleEvent = async (event) => {
         }
     });
 };
-
+/*
 router.post('/callback', function *(ctx, next) {
   // 取 User 傳送得資料
       Promise
@@ -63,14 +63,17 @@ router.post('/callback', function *(ctx, next) {
 app.use(function *(ctx, next){
     this.status = 200;
   });
+ */
 
-/*  
+
+
+
 router
     .get('/', ctx => {
         ctx.body = '首頁';
     })
 
-    .post('/callback', function *(ctx, next) {
+    .post('/callback', function(ctx) {
      
       Promise
       .all(ctx.req.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
@@ -82,7 +85,7 @@ router
 
 
 app.use(router.routes());
- */
+
 
 
 const port = process.env.PORT || 3000;
