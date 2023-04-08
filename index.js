@@ -100,7 +100,11 @@ router.get('/', async(ctx) => {
     ctx.body = 'Hello Koa2 body'; 
 });  
 // Router -> /ready
-router.get('/ready', async(ctx) => {     
-    ctx.body = 'Ready Content'; 
-});  app.use(router.routes());  
+router.post('/callback', async(ctx) => {     
+    //ctx.body = 'Ready Content'; 
+  let events = ctx.request.body.events;
+  await events.map(handleEvent);
+});  
+
+app.use(router.routes());  
 app.listen(3001);
