@@ -6,7 +6,7 @@ const Router = require('koa-router');
 const Koa = require('koa');
 const app = new Koa();
 
-//const router = new Router();
+const router = new Router();
 
 
 const config = {
@@ -47,53 +47,30 @@ const handleEvent = async (event) => {
         }
     });
 };
-/*
-router.post('/callback', function *(ctx, next) {
-  // 取 User 傳送得資料
+
+
+router
+    .get('/', ctx => {
+        ctx.body = '首頁';
+    })
+
+    .post('/callback', function *(ctx) {
+     
       Promise
       .all(ctx.req.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
       .then((result) => res.json(result))
       .catch((err) => {
-          res.status(500).end();   
-        });
-        
-  
-})
-
-app.use(function *(ctx, next){
-    this.status = 200;
-  });
- */
-
-
-
-
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-const router = Router();  
-
-router.get('/', async(ctx) => {     
-    ctx.body = 'Hello Koa2 body'; 
-});  
-
-    .post('/callback', function(ctx) {   
-      Promise
-      .all(ctx.request.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
-      .then((result) => res.json(result))
+          res.status(500).end();
+      });
     });
 
-app.use(router.routes());  
-app.listen(3001);
+
+app.use(router.routes());
+
+
+
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`listening on ${port}`);
+});
