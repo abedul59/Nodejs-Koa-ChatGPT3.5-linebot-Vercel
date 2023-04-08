@@ -67,44 +67,33 @@ app.use(function *(ctx, next){
 
 
 
-/*
-router
-    .get('/', ctx => {
-        ctx.body = '首頁';
-    })
 
-    .post('/callback', function(ctx) {
+
      
-      Promise
-      .all(ctx.request.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
-      .then((result) => res.json(result))
-      //.catch((err) => {
-          //res.status(500).end();
-      //});
-    });
-
-
-app.use(router.routes());
 
 
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`listening on ${port}`);
-});
-*/
+
+
+
+
+
+
+
+
+
 
 const router = Router();  
-// Router -> / 
+
 router.get('/', async(ctx) => {     
     ctx.body = 'Hello Koa2 body'; 
 });  
-// Router -> /ready
-router.post('/callback', async(ctx) => {     
-    //ctx.body = 'Ready Content'; 
-  let events = ctx.request.body.events;
-  await events.map(handleEvent);
-});  
+
+    .post('/callback', line.middleware(config), function(ctx) {   
+      Promise
+      .all(ctx.request.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
+      .then((result) => res.json(result))
+    });
 
 app.use(router.routes());  
 app.listen(3001);
