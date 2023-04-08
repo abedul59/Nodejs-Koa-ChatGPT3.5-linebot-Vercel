@@ -8,6 +8,10 @@ const app = new Koa();
 
 const router = new Router();
 
+const bodyParser = require('koa-bodyparser'); // import the koa-bodyparser middleware
+
+app.use(bodyParser()); // add the koa-bodyparser middleware to the app
+
 
 const config = {
   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN,
@@ -54,21 +58,17 @@ router
         ctx.body = '首頁';
     })
 
-    .post('/callback', function *(ctx) {
-     
-      Promise
-      .all(ctx.req.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
-      .then((result) => res.json(result))
+    .post('/callback', async (ctx, next) => { // modify the route handler to be an async function
+      await Promise.all(ctx.request.body.events.map(handleEvent)) // modify the way to get the request body
+      .then((result) => ctx.body = result) // modify the way to send the response
       .catch((err) => {
-          res.status(500).end();
+          ctx.status = 500; // modify the way to send error response
+          ctx.body = err.message;
       });
     });
 
 
 app.use(router.routes());
-
-
-
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
