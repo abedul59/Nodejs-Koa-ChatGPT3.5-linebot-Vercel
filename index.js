@@ -89,7 +89,7 @@ router.get('/', async(ctx) => {
     ctx.body = 'Hello Koa2 body'; 
 });  
 
-    .post('/callback', line.middleware(config), function(ctx) {   
+    .post('/callback', function(ctx) {   
       Promise
       .all(ctx.request.body.events.map(handleEvent))  //handleEvent處理傳過來的訊息再回傳
       .then((result) => res.json(result))
